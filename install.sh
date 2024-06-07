@@ -4,7 +4,7 @@ workdir=$(pwd)
 sudo add-apt-repository universe
 
 sudo apt-get update
-sudo apt install curl qemu-utils wget gpg python3-dev vim htop bmon gcc build-essential linux-headers-$(uname -r) make dkms nmap net-tools hping3 arping foremost libimage-exiftool-perl sonic-visualiser wxhexeditor hexedit gparted rsync tcpdump wget curl tree minicom git whois nethogs testdisk openssh-server openssl sqlite3 python3-pip tshark openssl keepassx gufw rename parted p7zip wireshark
+sudo apt install curl qemu-utils wget gpg python3-dev vim htop bmon gcc build-essential linux-headers-$(uname -r) make dkms nmap net-tools hping3 arping foremost libimage-exiftool-perl sonic-visualiser wxhexeditor hexedit gparted rsync tcpdump wget curl tree minicom git whois nethogs testdisk openssh-server openssl sqlite3 python3-pip tshark openssl keepassx gufw rename parted p7zip wireshark sleuthkit cargo
 
 #installation de docker
 # Add Docker's official GPG key:
@@ -57,11 +57,29 @@ fi
 #installation de evtx_dump pour parser les evtx
 curl -s https://api.github.com/repos/omerbenamram/evtx/releases/latest | grep "browser_download_url" | grep "x86_64-unknown-linux-gnu" | cut -d : -f 2,3 | tr -d \" | wget -q -O evtx_dump -i - && chmod +x evtx_dump
 
+if [ ! -d chainsaw ]
+then
+git clone https://github.com/WithSecureLabs/chainsaw.git
+cd chainsaw
+cargo build --release
+cp target/release/chainsaw .
+cd $workdir
+fi
 
+if [ ! -d sigma ]
+then
+git clone https://github.com/SigmaHQ/sigma
+fi
+
+if [ ! -d EVTX-ATTACK-SAMPLES ]
+then
+git clone https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES.git
+fi
 
 #installation des librairies python nécessaires
 pip install -r requirements.txt
 
 sudo docker pull log2timeline/plaso
-sudo docker pull splunk
+sudo docker pull splunk/splunk
+sudo docker pull zeek/zeek
 

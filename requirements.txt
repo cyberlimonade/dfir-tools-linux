@@ -1,3 +1,4 @@
 wheel
 evtx2es 
 plaso
+splunk-sdk

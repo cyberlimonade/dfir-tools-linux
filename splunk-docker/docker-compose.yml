@@ -12,14 +12,13 @@ services:
     environment:
       - SPLUNK_START_ARGS=--accept-license
       #- SPLUNK_APPS_URL=https://splunkbase.splunk.com/app/1809/release/8.1.1/download,https://splunkbase.splunk.com/app/5234/release/8.1.1/download
-      - SPLUNK_PASSWORD=${SPLUNK_PASSWORD}
+      - SPLUNK_PASSWORD=changeme
       #- SPLUNKBASE_USERNAME=${SPLUNKBASE_USERNAME}
       #- SPLUNKBASE_PASSWORD=${SPLUNKBASE_PASSWORD}
       - DEBUG=true
     ports:
       - 8000:8000
-      - 8089
+      - 8089:8089
     volumes:
       - splunk-var:/opt/splunk/var
       - splunk-etc:/opt/splunk/etc
-      - /home/cases:/home/splunk
